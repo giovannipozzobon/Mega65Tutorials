@@ -16,11 +16,11 @@
 .const SCREEN_WIDTH = 640
 
 // If you use V200 then SCREEN_HEIGHT much be <= 240, otherwise <= 480
-//#define V200
-.const SCREEN_HEIGHT = 400
+#define V200
+.const SCREEN_HEIGHT = 240
 
 // Choose IS_NTSC if you are running in NTSC 60hz mode
-#define IS_NTSC
+//#define IS_NTSC
 
 // ------------------------------------------------------------
 #import "mega65macros.asm"
