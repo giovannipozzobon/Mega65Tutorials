@@ -1,8 +1,7 @@
-KICK=/Users/colinreed/Applications/KickAss/KickAss65CE02-5.24f.jar
-APPNAME=tutorial_9_superAdvPixies
-C1541=/opt/homebrew/Cellar/vice/3.7.1/bin/c1541
-XEMU=/Applications/Xemu/xmega65.app/Contents/MacOS/xmega65
-XEMUB=~/Documents/GitHub/RetroCogs/xemu/build/bin/xmega65.native
+KICK=/Applications/KickAssembler/KickAss_5.21.jar
+APPNAME=tutorial_4_ncm
+C1541=/opt/homebrew/Cellar/vice/3.8/bin/c1541
+XEMU=/Applications/Mega65/xmega65.app/Contents/MacOS/xmega65
 PNG65=node ./build/aseparse65/png65.js
 LDTK65=node ./build/ldtk65/ldtk65.js
 MEGA65_FTP=~/Applications/Mega65/mega65_ftp.osx
