@@ -1,6 +1,6 @@
 KICK=/Applications/KickAssembler/KickAss_5.21.jar
 APPNAME=tutorial_4_ncm
-C1541=/opt/homebrew/Cellar/vice/3.8/bin/c1541
+C1541=/opt/homebrew/Cellar/vice/3.9/bin/c1541
 XEMU=/Applications/Mega65/xmega65.app/Contents/MacOS/xmega65
 PNG65=node ./build/aseparse65/png65.js
 LDTK65=node ./build/ldtk65/ldtk65.js
@@ -18,7 +18,7 @@ code:
 	$(PNG65) chars --fcm --size 32,32 --input "fcm_test.png" --output "." --nofill
 	$(PNG65) chars --ncm --size 32,32 --input "ncm_test.png" --output "." --nofill
 	$(PNG65) sprites --ncm --size 16,16 --input "ncm_sprite.png" --output "." --nofill
-	java -cp $(KICK) kickass.KickAssembler65CE02 -vicesymbols -showmem $(APPNAME).asm
+	java -cp $(KICK) kickass.KickAssembler65CE02 -log $*.log -vicesymbols -showmem -symbolfile  -bytedumpfile $*.klist 2> /dev/null $(APPNAME).asm
 
 run: all
 	$(XEMU) -prg $(APPNAME).prg -uartmon :4510 -videostd 0

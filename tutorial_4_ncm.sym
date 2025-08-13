@@ -1,0 +1,37 @@
+.label Palette=$4840
+.namespace System {
+  .label TopBorder=$b
+  .label IRQTopPos=$f
+  .label InitM65=$2081 {
+  }
+  .label InitVideoMode=$20bf {
+  }
+  .label BotBorder=$d
+  .label IRQBotPos=$11
+  .label CenterFrameHorizontally=$20f2 {
+    .label charXPos=$2
+  }
+  .label CenterFrameVertically=$211d {
+    .label verticalCenter=$2
+    .label charYPos=$6
+    .label isPal=$213a {
+    }
+  }
+}
+.label COLOR_BASE=$4cd0 {
+}
+.label Entry=$2016 {
+  .label mainloop=$2063
+}
+.label InitPalette=$21e7 {
+}
+.label Chars=$4000
+.label FrameCount=$a
+.label Tmp=$2
+.label SCREEN_BASE=$4870 {
+}
+.label CopyColors=$224e {
+  .label Job=$2261 {
+  }
+}
+.label Tmp1=$6

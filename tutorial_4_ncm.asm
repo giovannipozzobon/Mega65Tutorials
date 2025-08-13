@@ -47,7 +47,8 @@
 
 // LOGICAL_ROW_SIZE is the number of bytes the VIC-IV advances each row
 //
-.const LOGICAL_ROW_SIZE = (2 + (CHARS_WIDE * 2))
+//.const LOGICAL_ROW_SIZE = (2 + (CHARS_WIDE * 2))
+.const LOGICAL_ROW_SIZE = (CHARS_WIDE * 2)// Jobond 13/08 modifica per disattivasre il RRB
 .const LOGICAL_NUM_ROWS = NUM_ROWS * NUM_SCREENS_HIGH
 
 .print "NUM_CHARS = " + LOGICAL_ROW_SIZE / 2
@@ -194,11 +195,13 @@ Job:
 .segment Data "Chars"
 .align 64
 Chars:
-	.import binary "./ncm_test_chr.bin"
+	//.import binary "./ncm_test_chr.bin" 
+	.import binary "./TestAseprite10_chr.bin" 
 
 .segment Data "Palettes"
 Palette:
-	.import binary "./ncm_test_pal.bin"
+	//.import binary "./ncm_test_pal.bin"
+	.import binary "./TestAseprite10_pal.bin"
 
 .print "Chars = " + toHexString(Chars)
 
@@ -207,14 +210,16 @@ Palette:
 .segment Data "ScreenData"
 SCREEN_BASE:
 {
-	.for(var r = 0;r < LOGICAL_NUM_ROWS+1;r++) 
+	//.for(var r = 0;r < LOGICAL_NUM_ROWS+1;r++) 
+	.for(var r = 0;r < LOGICAL_NUM_ROWS;r++) // Jobond 13/08 modifica per disattivasre il RRB
 	{
 		//GOTOX position
-		.byte $00,$00
+		//.byte $00,$00 // Jobond 13/08 modifica per disattivasre il RRB
 
 		.for(var c = 0;c < CHARS_WIDE;c++) 
 		{
-			.var choffs = (Chars/64) + (((r&3)*2) + (c&1)) + 16
+			//.var choffs = (Chars/64) + (((r&3)*2) + (c&1)) + 16
+			.var choffs = (Chars/64) + ((r&1) * 8) // Jobond 13/08 modifica per verificare come funziona lo schermo
 			//Char index
 			.byte <choffs,>choffs
 		}
@@ -226,7 +231,8 @@ SCREEN_BASE:
 .segment Data "ColorData"
 COLOR_BASE:
 {
-	.for(var r = 0;r < LOGICAL_NUM_ROWS+1;r++) 
+	// .for(var r = 0;r < LOGICAL_NUM_ROWS+1;r++) 
+	.for(var r = 0;r < LOGICAL_NUM_ROWS;r++) // Jobond 13/08 modifica per disattivasre il RRB
 	{
 		.var altpal = $00
 		.if((r & 4) != 0)
@@ -235,7 +241,7 @@ COLOR_BASE:
 		}
 
 		//GOTOX marker - Byte0bit4=GOTOXMarker
-		.byte $10,altpal
+		//.byte $10,altpal // Jobond 13/08 modifica per disattivasre il RRB
 
 		.for(var c = 0;c < CHARS_WIDE;c++) 
 		{

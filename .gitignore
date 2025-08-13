@@ -2,3 +2,7 @@
 *.prg
 .source.txt
 .DS_Store
+tutorial_4_ncm.dbg
+.gitignore
+.klist
+.gitignore

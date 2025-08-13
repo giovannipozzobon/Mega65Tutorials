@@ -1,0 +1,34 @@
+parsing
+flex pass 1
+flex pass 2
+flex pass 3
+Output pass
+  MAX_WIDTH = 384
+  MAX_HEIGHT = 288
+  NUM_CHARS = 20
+  SCREEN_BASE = 4870
+  Chars = 4000
+Writing prg file: tutorial_4_ncm.prg
+
+Memory Map
+----------
+Zeropage-segment:
+  *$0002-$000a Main zeropage
+  *$000b-$0012 System ZP
+
+Code-segment:
+  $2001-$2014 BasicUpstart65
+  $2016-$2015 Unnamed
+  $2016-$2080 Entry
+  $2081-$226f System Code
+
+Data-segment:
+  $4000-$483f Chars
+  $4840-$486f Palettes
+  $4870-$4ccf ScreenData
+  $4cd0-$512f ColorData
+
+BSS-segment:
+
+Writing Vice symbol file: tutorial_4_ncm.vs
+Writing Symbol file: tutorial_4_ncm.sym
