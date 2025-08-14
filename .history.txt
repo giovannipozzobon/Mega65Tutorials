@@ -1,0 +1,43 @@
+help
+dis Entry
+dis +16
+dis ProcessEvenRows
+help
+char 0
+char 1
+char 2
+char 3
+b ProcessEvenRows
+break ProcessEvenRows
+dis ProcessEvenRows
+n
+sbreak ProcessEvenRows
+dis ProcessEvenRows
+n
+g ProcessEvenRows
+help
+go ProcessEvenRows
+dis ProcessEvenRows
+n
+n
+help
+next
+next
+help
+list
+break
+step
+step
+step
+help
+dis ProcessEvenRows 
+go 226f
+step
+step
+step
+step
+step
+step
+next
+dis ProcessEvenRows 
+dis mainloop

@@ -252,6 +252,26 @@ end:
 	sta ptr2
 }
 
+// D = C + (A * B)
+.macro _mul16(A,B,C,D)
+{
+	lda #$00
+	sta $d772
+	sta $d776
+
+	lda A+0
+	sta $d770					// mul A lsb
+	lda A+1
+	sta $d771					// mul A msb
+
+	lda B+0
+	sta $d774					// mul B lsb
+	lda B+1
+	sta $d775					// mul B msb
+
+	_add16(C, $d778, D)
+}
+
 // _set24im - store a 24bit constant to a memory location
 .macro _set24im(value, dst)
 {
@@ -589,3 +609,18 @@ end:
 	}
 }
 
+.macro UARTClearKey() {
+        // clear key buffer
+!loop:  lda UART_ASCIIKEY
+        beq !enduart+
+        sta UART_ASCIIKEY
+        bra !loop-
+!enduart:
+}
+
+// read ASCII key is in accumulator
+.macro UARTWaitKey() {
+!loop:  lda UART_ASCIIKEY
+        beq !loop-
+        sta UART_ASCIIKEY
+}

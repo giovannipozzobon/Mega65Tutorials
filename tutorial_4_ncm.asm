@@ -11,6 +11,7 @@
 // Color RAM is at a fixed base address
 //
 .const COLOR_RAM = $ff80000
+.const UART_ASCIIKEY    = $D610     // hardware accelerated keyboard scanner
 
 // ------------------------------------------------------------
 //
@@ -63,6 +64,20 @@
 
 	FrameCount:		.byte $00
 
+	//Jobond
+	mapPtrLo:    	.byte $00
+	mapPtrHi:    	.byte $00
+	scrPtrLo:    	.byte $00
+	scrPtrHi:    	.byte $00
+	tileCodeLo:  	.byte $00
+	tileCodeHi:  	.byte $00
+	tilePtrLo: 		.byte $00
+	tilePtrHi:   	.byte $00
+	tmpLo:       	.byte $00
+	tmpHi:       	.byte $00
+	value_Lo:    	.byte $00
+	value_Hi:    	.byte $00
+
 // ------------------------------------------------------------
 //
 .segment Code
@@ -70,7 +85,7 @@ BasicUpstart65(Entry)
 * = $2016
 
 .segment Code "Entry"
-Entry: {
+Entry: 
 	jsr System.InitM65
 
 	// Update screen positioning based on PAL/NTSC
@@ -94,9 +109,14 @@ Entry: {
 	inc
 	sta $d020
 
+	jsr ProcessEvenRows //Jobond
+
+	UARTClearKey()
 	// Main loop
+
 mainloop:
 	// Wait for (H400) rasterline $07
+/*
 !:	lda $d053
 	and #$07
 	bne !-
@@ -111,10 +131,19 @@ mainloop:
 	inc FrameCount
 
     dec $d020
+*/
+
+	UARTWaitKey()
+        cmp #113                        // compare A to small 'q' ASCII
+        beq ridisegna 
 
 	jmp mainloop
 
-}
+ridisegna:
+		jsr ProcessEvenRows //Jobond
+
+		jmp mainloop
+
 
 // ------------------------------------------------------------
 //
@@ -190,6 +219,11 @@ Job:
 	DMACopyJob(COLOR_BASE, COLOR_RAM, LOGICAL_ROW_SIZE * NUM_ROWS, false, false)
 }
 
+//-------------------------------------------------------------
+// tiles_job
+//-------------------------------------------------------------
+#import "tiles_job.asm" 
+
 // ------------------------------------------------------------
 //
 .segment Data "Chars"
@@ -198,17 +232,32 @@ Chars:
 	//.import binary "./ncm_test_chr.bin" 
 	.import binary "./TestAseprite10_chr.bin" 
 
+.print "Chars = " + toHexString(Chars)
+
 .segment Data "Palettes"
 Palette:
 	//.import binary "./ncm_test_pal.bin"
 	.import binary "./TestAseprite10_pal.bin"
 
-.print "Chars = " + toHexString(Chars)
+.print "Palette = " + toHexString(Palette)
+
+//Jobond 13/08/2025 -- lettura della mappa e delle tiles
+.segment Data "Map"
+Map:
+	.import binary "./TestAseprite1_LV0L0_map.bin"
+
+.print "Map = " + toHexString(Map)
+
+.segment Data "Tiles"
+Tiles:
+	.import binary "./TestAseprite10_tiles.bin"
+
+.print "Tiles = " + toHexString(Tiles)
 
 // ------------------------------------------------------------
 //
 .segment Data "ScreenData"
-SCREEN_BASE:
+SCREEN_BASE: .byte 
 {
 	//.for(var r = 0;r < LOGICAL_NUM_ROWS+1;r++) 
 	.for(var r = 0;r < LOGICAL_NUM_ROWS;r++) // Jobond 13/08 modifica per disattivasre il RRB

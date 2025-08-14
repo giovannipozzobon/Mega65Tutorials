@@ -18,7 +18,7 @@ code:
 	$(PNG65) chars --fcm --size 32,32 --input "fcm_test.png" --output "." --nofill
 	$(PNG65) chars --ncm --size 32,32 --input "ncm_test.png" --output "." --nofill
 	$(PNG65) sprites --ncm --size 16,16 --input "ncm_sprite.png" --output "." --nofill
-	java -cp $(KICK) kickass.KickAssembler65CE02 -log $*.log -vicesymbols -showmem -symbolfile  -bytedumpfile $*.klist 2> /dev/null $(APPNAME).asm
+	java -cp $(KICK) kickass.KickAssembler65CE02 $(APPNAME).asm -log $(APPNAME).log -showmem -symbolfile  -bytedumpfile $(APPNAME).klist 2> /dev/null 
 
 run: all
 	$(XEMU) -prg $(APPNAME).prg -uartmon :4510 -videostd 0
